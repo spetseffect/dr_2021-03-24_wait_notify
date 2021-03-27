@@ -3,8 +3,9 @@ package com.task3;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     static void copylist(String from,String to,String[] list){
@@ -12,9 +13,10 @@ public class Main {
             var item=new File(from+"\\"+f);
             var d=new File(to+"\\"+f);
             if(item.isDirectory()){
-                d.mkdir();
-                System.out.println(d.getPath());
-                copylist(item.getPath(), d.getPath(), item.list());
+                if(d.mkdir()) {
+                    System.out.println(d.getPath());
+                    copylist(item.getPath(), d.getPath(), Objects.requireNonNull(item.list()));
+                }
             }
             else{
                 try {
@@ -32,17 +34,15 @@ public class Main {
         File dirFrom=new File(from);
         File dirTo=new File(to);
         if (dirFrom.exists()) {
-            boolean isExists=false;
             if (!dirTo.exists()) {
-                if(dirTo.mkdir()) isExists=true;
-                else{
+                if(!dirTo.mkdir()){
                     System.out.println("Error. The folder \""+dirTo+"\" was not created.");
                     return;
                 }
             }
-            if(isExists){
-                copylist(from, to, Objects.requireNonNull(dirFrom.list()));
-            }
+            ExecutorService exec = Executors.newSingleThreadExecutor();
+            exec.submit(()-> copylist(from, to, Objects.requireNonNull(dirFrom.list())));
+            exec.shutdown();
         } else {
             System.out.println("Folder \""+from+"\" does not exists.");
         }
