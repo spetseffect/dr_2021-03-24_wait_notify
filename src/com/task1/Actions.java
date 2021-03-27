@@ -9,6 +9,7 @@ import java.util.Random;
 public class Actions {
     public Random rnd = new Random(System.currentTimeMillis());
     public int capacity = 20;
+    public int maxF=20;//максимальное случайное число (много не брать, а то факториал повесится)
     ArrayList<Integer> arr = new ArrayList<>(capacity);
     boolean isFilled = false;
     public static void saveToFile(String fileName, String data) {
@@ -35,7 +36,7 @@ public class Actions {
     }
     public synchronized void fill(String fileName) {
         for (int i = 0; i < this.capacity; i++) {
-            this.arr.add(rnd.nextInt(40)+1);
+            this.arr.add(rnd.nextInt(this.maxF)+1);
         }
         this.isFilled = true;
         notify();
@@ -47,7 +48,9 @@ public class Actions {
         saveToFile(fileName, str.toString());
     }
     public synchronized void simpleNums(String fileName) throws InterruptedException {
-        while (!isFilled) wait();
+        while (!isFilled) {
+            wait();
+        }
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < this.capacity; i++) {
             if(isSimpleNum(this.arr.get(i))){
@@ -58,7 +61,9 @@ public class Actions {
         saveToFile(fileName, str.toString());
     }
     public synchronized void factorials(String fileName) throws InterruptedException {
-        while (!isFilled) wait();
+        while (!isFilled) {
+            wait();
+        }
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < this.capacity; i++) {
             str.append(factorial(this.arr.get(i).longValue()));
