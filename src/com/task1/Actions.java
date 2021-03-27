@@ -33,9 +33,9 @@ public class Actions {
         }
         return result;
     }
-    public void fill(String fileName) {
+    public synchronized void fill(String fileName) {
         for (int i = 0; i < this.capacity; i++) {
-            this.arr.add(rnd.nextInt(40));
+            this.arr.add(rnd.nextInt(40)+1);
         }
         this.isFilled = true;
         notify();
@@ -46,7 +46,7 @@ public class Actions {
         }
         saveToFile(fileName, str.toString());
     }
-    public void simpleNums(String fileName) throws InterruptedException {
+    public synchronized void simpleNums(String fileName) throws InterruptedException {
         while (!isFilled) wait();
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < this.capacity; i++) {
@@ -57,7 +57,7 @@ public class Actions {
         }
         saveToFile(fileName, str.toString());
     }
-    public void factorials(String fileName) throws InterruptedException {
+    public synchronized void factorials(String fileName) throws InterruptedException {
         while (!isFilled) wait();
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < this.capacity; i++) {
