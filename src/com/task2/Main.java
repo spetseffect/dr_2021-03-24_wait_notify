@@ -1,4 +1,4 @@
-package com.task1;
+package com.task2;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
