@@ -35,15 +35,20 @@ public class Actions {
         return result;
     }
     public synchronized void fill(String fileName) {
+        System.out.print("Array: ");
         for (int i = 0; i < this.capacity; i++) {
-            this.arr.add(rnd.nextInt(this.maxF)+1);
+            var tmp=rnd.nextInt(this.maxF)+1;
+            this.arr.add(tmp);
+            System.out.print(tmp+" ");
         }
+        System.out.println();
         this.isFilled = true;
         notify();
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < this.capacity; i++) {
             str.append(this.arr.get(i));
             str.append("\n");
+
         }
         saveToFile(fileName, str.toString());
     }
@@ -51,23 +56,29 @@ public class Actions {
         while (!isFilled) {
             wait();
         }
+        System.out.print("simpleNums: ");
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < this.capacity; i++) {
             if(isSimpleNum(this.arr.get(i))){
                 str.append(this.arr.get(i));
                 str.append("\n");
+                System.out.print(this.arr.get(i)+" ");
             }
         }
+        System.out.println();
         saveToFile(fileName, str.toString());
     }
     public synchronized void factorials(String fileName) throws InterruptedException {
         while (!isFilled) {
             wait();
         }
+        System.out.println("factorials:");
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < this.capacity; i++) {
-            str.append(factorial(this.arr.get(i).longValue()));
+            var tmp=factorial(this.arr.get(i).longValue());
+            str.append(tmp);
             str.append("\n");
+            System.out.println(tmp);
         }
         saveToFile(fileName, str.toString());
     }
