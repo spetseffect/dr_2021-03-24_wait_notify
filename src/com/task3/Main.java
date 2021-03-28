@@ -29,8 +29,8 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        String from="D:\\Desktop\\Test\\from";
-        String to="D:\\Desktop\\Test\\to";
+        String from="D:\\Desktop\\Test\\from";//откуда копируем содержимое
+        String to="D:\\Desktop\\Test\\to";//куда копируем. если папка не существует, она будет создана
         File dirFrom=new File(from);
         File dirTo=new File(to);
         if (dirFrom.exists()) {

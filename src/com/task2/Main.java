@@ -6,9 +6,9 @@ import java.util.concurrent.Executors;
 public class Main {
 
     public static void main(String[] args) {
-        String fname1 = "D:\\Desktop\\Test\\27.txt";
-        String fname2 = "D:\\Desktop\\Test\\27s.txt";
-        String fname3 = "D:\\Desktop\\Test\\27f.txt";
+        String fname1 = "D:\\Desktop\\Test\\27.txt";//сюда будет записан набор случайных чисел
+        String fname2 = "D:\\Desktop\\Test\\27s.txt";//сюда будут записаны простые числа
+        String fname3 = "D:\\Desktop\\Test\\27f.txt";//сюда будут записаны факториалы
         var act = new Actions();
         ExecutorService exec = Executors.newFixedThreadPool(3);
         Runnable task1 = () -> act.fill(fname1);
